@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hilton Head 2026 🌊</title>
+  <style>
+    :root {
+      --bg: #f0f4f8;
+      --card-bg: #ffffff;
+      --header-bg: #1a6b8a;
+      --header-text: #ffffff;
+      --text: #1e293b;
+      --subtext: #64748b;
+      --radius: 12px;
+      --shadow: 0 2px 8px rgba(0,0,0,0.10);
+
+      --breakfast:   #fef9c3;
+      --breakfast-b: #ca8a04;
+      --lunch:       #dcfce7;
+      --lunch-b:     #16a34a;
+      --dinner:      #fce7f3;
+      --dinner-b:    #be185d;
+      --am:          #dbeafe;
+      --am-b:        #1d4ed8;
+      --pm:          #ede9fe;
+      --pm-b:        #7c3aed;
+      --kid:         #ffedd5;
+      --kid-b:       #c2410c;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 24px 32px;
+      text-align: center;
+    }
+    header h1 { font-size: 1.8rem; font-weight: 700; }
+    header p  { opacity: 0.85; margin-top: 4px; font-size: 0.95rem; }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 20px 24px 8px;
+      justify-content: center;
+    }
+    .filter-btn {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .filter-btn:hover { opacity: 0.8; transform: translateY(-1px); }
+    .filter-btn.active { outline: 3px solid #1a6b8a; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 16px;
+      padding: 20px 24px 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .tile {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .tile:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.13);
+    }
+    .tile.hidden { display: none; }
+
+    .tile-date {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--subtext);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      width: fit-content;
+    }
+    .tile-desc {
+      font-size: 0.95rem;
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    /* Badge colors by category */
+    .cat-breakfast .badge { background: var(--breakfast); color: var(--breakfast-b); }
+    .cat-lunch     .badge { background: var(--lunch);     color: var(--lunch-b); }
+    .cat-dinner    .badge { background: var(--dinner);    color: var(--dinner-b); }
+    .cat-am        .badge { background: var(--am);        color: var(--am-b); }
+    .cat-pm        .badge { background: var(--pm);        color: var(--pm-b); }
+    .cat-kid       .badge { background: var(--kid);       color: var(--kid-b); }
+
+    .filter-btn.cat-breakfast { background: var(--breakfast); color: var(--breakfast-b); border-color: var(--breakfast-b); }
+    .filter-btn.cat-lunch     { background: var(--lunch);     color: var(--lunch-b);     border-color: var(--lunch-b); }
+    .filter-btn.cat-dinner    { background: var(--dinner);    color: var(--dinner-b);    border-color: var(--dinner-b); }
+    .filter-btn.cat-am        { background: var(--am);        color: var(--am-b);        border-color: var(--am-b); }
+    .filter-btn.cat-pm        { background: var(--pm);        color: var(--pm-b);        border-color: var(--pm-b); }
+    .filter-btn.cat-kid       { background: var(--kid);       color: var(--kid-b);       border-color: var(--kid-b); }
+    .filter-btn.all           { background: #1a6b8a; color: #fff; border-color: #1a6b8a; }
+
+    #status {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--subtext);
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Hilton Head Island 2026 🌊</h1>
+  <p>June 19 – June 27 &nbsp;·&nbsp; Family Vacation Itinerary</p>
+</header>
+
+<div class="filters" id="filters">
+  <button class="filter-btn all active" data-cat="all">All</button>
+  <button class="filter-btn cat-breakfast" data-cat="Breakfast">Breakfast</button>
+  <button class="filter-btn cat-lunch"     data-cat="Lunch">Lunch</button>
+  <button class="filter-btn cat-dinner"    data-cat="Dinner">Dinner</button>
+  <button class="filter-btn cat-am"        data-cat="AM Activities">AM Activities</button>
+  <button class="filter-btn cat-pm"        data-cat="PM Activities">PM Activities</button>
+  <button class="filter-btn cat-kid"       data-cat="Kid Activities">Kid Activities</button>
+</div>
+
+<div id="status">Loading activities…</div>
+<div class="grid" id="grid"></div>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+  const SUPABASE_URL = 'https://rafacdstmdotcuuwwvde.supabase.co'
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhZmFjZHN0bWRvdGN1dXd3dmRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1MjE5OTYsImV4cCI6MjA5NzA5Nzk5Nn0.kDCp_BVPxYVO7liYQf3l-RDbyYgjsUAZygKTBIqIA3o'
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+  function catClass(category) {
+    const map = {
+      'Breakfast':      'cat-breakfast',
+      'Lunch':          'cat-lunch',
+      'Dinner':         'cat-dinner',
+      'AM Activities':  'cat-am',
+      'PM Activities':  'cat-pm',
+      'Kid Activities': 'cat-kid',
+    }
+    return map[category] ?? 'cat-am'
+  }
+
+  function formatDate(d) {
+    // d is like "6/19/26"
+    const [m, day, yr] = d.split('/')
+    const months = ['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    return `${months[parseInt(m)]} ${parseInt(day)}, 20${yr}`
+  }
+
+  const { data, error } = await supabase
+    .from('activities')
+    .select('*')
+    .order('id')
+
+  const status = document.getElementById('status')
+  const grid   = document.getElementById('grid')
+
+  if (error || !data) {
+    status.textContent = 'Error loading activities. Check console for details.'
+    console.error(error)
+  } else if (data.length === 0) {
+    status.textContent = 'No activities found in the database yet.'
+  } else {
+    status.style.display = 'none'
+    data.forEach(row => {
+      const cls = catClass(row.category)
+      const tile = document.createElement('div')
+      tile.className = `tile ${cls}`
+      tile.dataset.cat = row.category
+      tile.innerHTML = `
+        <div class="tile-date">${formatDate(row.date)}</div>
+        <div class="badge">${row.category}</div>
+        <div class="tile-desc">${row.description}</div>
+      `
+      grid.appendChild(tile)
+    })
+  }
+
+  // Filter buttons
+  document.getElementById('filters').addEventListener('click', e => {
+    const btn = e.target.closest('.filter-btn')
+    if (!btn) return
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'))
+    btn.classList.add('active')
+    const cat = btn.dataset.cat
+    document.querySelectorAll('.tile').forEach(tile => {
+      tile.classList.toggle('hidden', cat !== 'all' && tile.dataset.cat !== cat)
+    })
+  })
+</script>
+
+</body>
+</html>
